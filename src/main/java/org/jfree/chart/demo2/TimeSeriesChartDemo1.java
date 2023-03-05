@@ -190,7 +190,7 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
      *
      * @param args ignored.
      */
-    public void main(String[] args) {
+    public static void main(String[] args) {
 
         TimeSeriesChartDemo1 demo = new TimeSeriesChartDemo1(
                 "Time Series Chart Demo 1");

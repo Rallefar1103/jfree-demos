@@ -157,7 +157,7 @@ public class BarChartDemo1 extends ApplicationFrame {
      * @throws SecurityException
      * @throws NoSuchMethodException
      */
-    public void main(String[] args) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+    public static void main(String[] args) throws NoSuchMethodException, SecurityException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException,
             MissingParamsException, InvalidChartNameException {
         BarChartDemo1 demo = new BarChartDemo1("JFreeChart: BarChartDemo1.java");
