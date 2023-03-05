@@ -40,10 +40,20 @@ import java.awt.GradientPaint;
 import java.awt.Point;
 import java.awt.RadialGradientPaint;
 import java.awt.geom.Point2D;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFactoryReflection;
+import org.jfree.chart.ChartInvocationHandler;
+import org.jfree.chart.ChartLookupTable;
+import org.jfree.chart.DynamicProxyChartCreator;
+import org.jfree.chart.IReflectionFactory;
+import org.jfree.chart.InvalidChartNameException;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.MissingParamsException;
 import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.api.HorizontalAlignment;
 import org.jfree.chart.api.RectangleEdge;
@@ -62,14 +72,29 @@ import org.jfree.data.general.PieDataset;
  */
 public class PieChartDemo1 extends ApplicationFrame {
 
-    private static final long serialVersionUID = 1L;
+    private final long serialVersionUID = 1L;
+    private ChartFactoryReflection factory;
+    private ArrayList<Object> params = new ArrayList<Object>();
+    private DynamicProxyChartCreator proxyCreator;
+    private ChartInvocationHandler invocHandler;
 
     /**
      * Default constructor.
      *
      * @param title the frame title.
+     * @throws InvalidChartNameException
+     * @throws MissingParamsException
+     * @throws InstantiationException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
      */
-    public PieChartDemo1(String title) {
+    public PieChartDemo1(String title) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException,
+            MissingParamsException, InvalidChartNameException {
         super(title);
         setContentPane(createDemoPanel());
     }
@@ -81,7 +106,7 @@ public class PieChartDemo1 extends ApplicationFrame {
      *
      * @return A sample dataset.
      */
-    private static PieDataset createDataset() {
+    private PieDataset createDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
         dataset.setValue("Samsung", new Double(27.8));
         dataset.setValue("Others", new Double(55.3));
@@ -96,16 +121,32 @@ public class PieChartDemo1 extends ApplicationFrame {
      * @param dataset the dataset.
      *
      * @return A chart.
+     * @throws InvalidChartNameException
+     * @throws MissingParamsException
+     * @throws InstantiationException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
      */
-    private static JFreeChart createChart(PieDataset dataset) {
+    private JFreeChart createChart(PieDataset dataset) throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException,
+            InstantiationException, MissingParamsException, InvalidChartNameException {
 
-        // JFreeChart chart = ChartFactory.createPieChart(
-        // "Smart Phones Manufactured / Q3 2011", // chart title
-        // dataset, // data
-        // false, // no legend
-        // true, // tooltips
-        // false // no URL generation
-        // );
+        this.params.add("Smart Phones Manufactured / Q3 2011");
+        this.params.add(dataset);
+        this.params.add(false);
+        this.params.add(true);
+        this.params.add(false);
+
+        this.factory = new ChartFactoryReflection();
+        this.invocHandler = new ChartInvocationHandler(this.factory);
+        this.proxyCreator = new DynamicProxyChartCreator(this.invocHandler);
+
+        String classPath = ChartLookupTable.chartLookupTable.get("PieChart");
+        JFreeChart chart = this.proxyCreator.getChartObject(classPath, this.params);
 
         // set a custom background for the chart
         chart.setBackgroundPaint(new GradientPaint(new Point(0, 0),
@@ -162,7 +203,7 @@ public class PieChartDemo1 extends ApplicationFrame {
      * 
      * @return A radial gradient paint.
      */
-    private static RadialGradientPaint createGradientPaint(Color c1, Color c2) {
+    private RadialGradientPaint createGradientPaint(Color c1, Color c2) {
         Point2D center = new Point2D.Float(0, 0);
         float radius = 200;
         float[] dist = { 0.0f, 1.0f };
@@ -174,8 +215,19 @@ public class PieChartDemo1 extends ApplicationFrame {
      * Creates a panel for the demo (used by SuperDemo.java).
      *
      * @return A panel.
+     * @throws InvalidChartNameException
+     * @throws MissingParamsException
+     * @throws InstantiationException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
      */
-    public static JPanel createDemoPanel() {
+    public JPanel createDemoPanel() throws NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException,
+            MissingParamsException, InvalidChartNameException {
         JFreeChart chart = createChart(createDataset());
         chart.setPadding(new RectangleInsets(4, 8, 2, 2));
         ChartPanel panel = new ChartPanel(chart, false);
@@ -188,8 +240,19 @@ public class PieChartDemo1 extends ApplicationFrame {
      * Starting point for the demonstration application.
      *
      * @param args ignored.
+     * @throws InvalidChartNameException
+     * @throws MissingParamsException
+     * @throws InstantiationException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
      */
-    public static void main(String[] args) {
+    public void main(String[] args) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException,
+            MissingParamsException, InvalidChartNameException {
         PieChartDemo1 demo = new PieChartDemo1("JFreeChart: Pie Chart Demo 1");
         demo.pack();
         UIUtils.centerFrameOnScreen(demo);

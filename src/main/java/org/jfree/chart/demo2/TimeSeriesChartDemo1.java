@@ -33,7 +33,10 @@
 package org.jfree.chart.demo2;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartLookupTable;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LambdaChartCreator;
+import org.jfree.chart.NewChart;
 import org.jfree.chart.api.RectangleInsets;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.XYPlot;
@@ -58,7 +61,8 @@ import java.text.SimpleDateFormat;
  */
 public class TimeSeriesChartDemo1 extends ApplicationFrame {
 
-    private static final long serialVersionUID = 1L;
+    private final long serialVersionUID = 1L;
+    private LambdaChartCreator lambdaCreator;
 
     /**
      * A demonstration application showing how to create a simple time series
@@ -80,14 +84,14 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
      *
      * @return A chart.
      */
-    private static JFreeChart createChart(XYDataset dataset) {
+    private JFreeChart createChart(XYDataset dataset) {
 
-        // JFreeChart chart = ChartFactory.createTimeSeriesChart(
-        // "Legal & General Unit Trust Prices", // title
-        // "Date", // x-axis label
-        // "Price Per Unit", // y-axis label
-        // dataset);
+        this.lambdaCreator = new LambdaChartCreator();
+        NewChart<String, XYDataset, JFreeChart> function = (type, title, category, value,
+                chartData) -> ChartFactory.getChartRegular(type, title, category, value, chartData);
 
+        JFreeChart chart = this.lambdaCreator.createChart(function, "TimeSeriesChart",
+                "Legal & General Unit Trust Prices", "Date", "Price Per Unit", dataset);
         chart.setBackgroundPaint(Color.WHITE);
 
         XYPlot plot = (XYPlot) chart.getPlot();
@@ -118,7 +122,7 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
      *
      * @return The dataset.
      */
-    private static XYDataset createDataset() {
+    private XYDataset createDataset() {
 
         TimeSeries s1 = new TimeSeries("L&G European Index Trust");
         s1.add(new Month(2, 2001), 181.8);
@@ -173,7 +177,7 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
      *
      * @return A panel.
      */
-    public static JPanel createDemoPanel() {
+    public JPanel createDemoPanel() {
         JFreeChart chart = createChart(createDataset());
         ChartPanel panel = new ChartPanel(chart, false);
         panel.setFillZoomRectangle(true);
@@ -186,7 +190,7 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
      *
      * @param args ignored.
      */
-    public static void main(String[] args) {
+    public void main(String[] args) {
 
         TimeSeriesChartDemo1 demo = new TimeSeriesChartDemo1(
                 "Time Series Chart Demo 1");
