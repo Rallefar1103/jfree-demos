@@ -33,15 +33,15 @@
 package org.jfree.chart.demo2;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.api.RectangleInsets;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.ui.ApplicationFrame;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.UIUtils;
+import org.jfree.chart.swing.ApplicationFrame;
+import org.jfree.chart.swing.ChartPanel;
+import org.jfree.chart.swing.UIUtils;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -52,8 +52,8 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 
 /**
- * An example of a time series chart create using JFreeChart.  For the most 
- * part, default settings are used, except that the renderer is modified to 
+ * An example of a time series chart create using JFreeChart. For the most
+ * part, default settings are used, except that the renderer is modified to
  * show filled shapes (as well as lines) at each data point.
  */
 public class TimeSeriesChartDemo1 extends ApplicationFrame {
@@ -62,9 +62,9 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
 
     /**
      * A demonstration application showing how to create a simple time series
-     * chart.  This example uses monthly data.
+     * chart. This example uses monthly data.
      *
-     * @param title  the frame title.
+     * @param title the frame title.
      */
     public TimeSeriesChartDemo1(String title) {
         super(title);
@@ -76,17 +76,17 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
     /**
      * Creates a chart.
      *
-     * @param dataset  a dataset.
+     * @param dataset a dataset.
      *
      * @return A chart.
      */
     private static JFreeChart createChart(XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(
-            "Legal & General Unit Trust Prices",  // title
-            "Date",             // x-axis label
-            "Price Per Unit",   // y-axis label
-            dataset);
+        // JFreeChart chart = ChartFactory.createTimeSeriesChart(
+        // "Legal & General Unit Trust Prices", // title
+        // "Date", // x-axis label
+        // "Price Per Unit", // y-axis label
+        // dataset);
 
         chart.setBackgroundPaint(Color.WHITE);
 
@@ -184,7 +184,7 @@ public class TimeSeriesChartDemo1 extends ApplicationFrame {
     /**
      * Starting point for the demonstration application.
      *
-     * @param args  ignored.
+     * @param args ignored.
      */
     public static void main(String[] args) {
 

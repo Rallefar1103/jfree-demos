@@ -33,33 +33,52 @@
 package org.jfree.chart.demo2;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartFactoryReflection;
+import org.jfree.chart.ChartLookupTable;
+import org.jfree.chart.IReflectionFactory;
+import org.jfree.chart.InvalidChartNameException;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.MissingParamsException;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.swing.ApplicationFrame;
+import org.jfree.chart.swing.ChartPanel;
+import org.jfree.chart.swing.UIUtils;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.chart.ui.ApplicationFrame;
-import org.jfree.chart.ui.UIUtils;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 /**
  * A simple demonstration application showing how to create a bar chart.
  */
 public class BarChartDemo1 extends ApplicationFrame {
 
-    private static final long serialVersionUID = 1L;
+    private final long serialVersionUID = 1L;
+    private IReflectionFactory factory;
+    private ArrayList<Object> params = new ArrayList<Object>();
 
     /**
      * Creates a new demo instance.
      *
-     * @param title  the frame title.
+     * @param title the frame title.
+     * @throws InvalidChartNameException
+     * @throws MissingParamsException
+     * @throws InstantiationException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
      */
-    public BarChartDemo1(String title) {
+    public BarChartDemo1(String title) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException,
+            MissingParamsException, InvalidChartNameException {
         super(title);
         CategoryDataset dataset = createDataset();
         JFreeChart chart = createChart(dataset);
@@ -75,7 +94,7 @@ public class BarChartDemo1 extends ApplicationFrame {
      *
      * @return The dataset.
      */
-    private static CategoryDataset createDataset() {
+    private CategoryDataset createDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         dataset.addValue(7445, "JFreeSVG", "Warm-up");
         dataset.addValue(24448, "Batik", "Warm-up");
@@ -87,15 +106,32 @@ public class BarChartDemo1 extends ApplicationFrame {
     /**
      * Creates a sample chart.
      *
-     * @param dataset  the dataset.
+     * @param dataset the dataset.
      *
      * @return The chart.
+     * @throws InvalidChartNameException
+     * @throws MissingParamsException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
+     * @throws InstantiationException
+     * @throws ClassNotFoundException
      */
-    private static JFreeChart createChart(CategoryDataset dataset) {
-        JFreeChart chart = ChartFactory.createBarChart(
-            "Performance: JFreeSVG vs Batik", null /* x-axis label*/, 
-                "Milliseconds" /* y-axis label */, dataset);
-        chart.addSubtitle(new TextTitle("Time to generate 1000 charts in SVG " 
+    private JFreeChart createChart(CategoryDataset dataset)
+            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException, MissingParamsException, InvalidChartNameException, ClassNotFoundException,
+            InstantiationException {
+
+        this.params.add("Performance: JFreeSVG vs Batik");
+        this.params.add("Milliseconds");
+        this.params.add("Milliseconds");
+        this.params.add(dataset);
+        this.factory = new ChartFactoryReflection();
+        String classPath = ChartLookupTable.chartLookupTable.get("BarChart");
+        JFreeChart chart = factory.getChartReflection(classPath, this.params);
+        chart.addSubtitle(new TextTitle("Time to generate 1000 charts in SVG "
                 + "format (lower bars = better performance)"));
         chart.setBackgroundPaint(Color.WHITE);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
@@ -104,16 +140,26 @@ public class BarChartDemo1 extends ApplicationFrame {
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
         renderer.setDrawBarOutline(false);
-        chart.getLegend().setFrame(BlockBorder.NONE);
         return chart;
     }
 
     /**
      * Starting point for the demonstration application.
      *
-     * @param args  ignored.
+     * @param args ignored.
+     * @throws InvalidChartNameException
+     * @throws MissingParamsException
+     * @throws InstantiationException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
      */
-    public static void main(String[] args) {
+    public void main(String[] args) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException,
+            MissingParamsException, InvalidChartNameException {
         BarChartDemo1 demo = new BarChartDemo1("JFreeChart: BarChartDemo1.java");
         demo.pack();
         UIUtils.centerFrameOnScreen(demo);

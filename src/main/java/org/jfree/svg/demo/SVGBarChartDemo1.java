@@ -46,7 +46,7 @@ import org.jfree.chart.labels.ItemLabelPosition;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.StatisticalBarRenderer;
-import org.jfree.chart.ui.TextAnchor;
+import org.jfree.chart.text.TextAnchor;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.statistics.DefaultStatisticalCategoryDataset;
 import org.jfree.svg.SVGGraphics2D;
@@ -56,15 +56,14 @@ import org.jfree.svg.SVGUtils;
  * A demo/test for a bar chart.
  */
 public class SVGBarChartDemo1 {
-    
+
     /**
      * Creates a sample dataset.
      *
      * @return The dataset.
      */
     private static CategoryDataset createDataset() {
-        DefaultStatisticalCategoryDataset dataset
-            = new DefaultStatisticalCategoryDataset();
+        DefaultStatisticalCategoryDataset dataset = new DefaultStatisticalCategoryDataset();
         dataset.add(10.0, 2.4, "Row 1", "Column 1");
         dataset.add(15.0, 4.4, "Row 1", "Column 2");
         dataset.add(13.0, 2.1, "Row 1", "Column 3");
@@ -79,14 +78,14 @@ public class SVGBarChartDemo1 {
     /**
      * Creates a sample chart.
      *
-     * @param dataset  a dataset.
+     * @param dataset a dataset.
      *
      * @return The chart.
      */
     private static JFreeChart createChart(CategoryDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createLineChart(
-            "Statistical Bar Chart Demo 1", "Type", "Value", dataset);
+        // JFreeChart chart = ChartFactory.createLineChart(
+        // "Statistical Bar Chart Demo 1", "Type", "Value", dataset);
 
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
 
@@ -125,9 +124,9 @@ public class SVGBarChartDemo1 {
     /**
      * Starting point for the demo.
      * 
-     * @param args  ignored.
+     * @param args ignored.
      * 
-     * @throws IOException 
+     * @throws IOException
      */
     public static void main(String[] args) throws IOException {
         JFreeChart chart = createChart(createDataset());

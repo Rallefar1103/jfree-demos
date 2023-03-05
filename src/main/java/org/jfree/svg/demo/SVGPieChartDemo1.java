@@ -43,11 +43,11 @@ import java.io.IOException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.StandardChartTheme;
+import org.jfree.chart.api.HorizontalAlignment;
+import org.jfree.chart.api.RectangleEdge;
+import org.jfree.chart.plot.pie.PiePlot;
 //import org.jfree.chart.drawable.GradientPainter;
-import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.chart.ui.HorizontalAlignment;
-import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.svg.SVGGraphics2D;
@@ -57,14 +57,7 @@ import org.jfree.svg.SVGUtils;
  * A demo/test for a pie chart.
  */
 public class SVGPieChartDemo1 {
-    
-    static {
-        // set a theme using the new shadow generator feature available in
-        // 1.0.14 - for backwards compatibility it is not enabled by default
-        ChartFactory.setChartTheme(new StandardChartTheme("JFree/Shadow",
-                true));
-    }
-    
+
     /**
      * Creates a sample dataset.
      * 
@@ -84,21 +77,21 @@ public class SVGPieChartDemo1 {
     /**
      * Creates a chart.
      *
-     * @param dataset  the dataset.
+     * @param dataset the dataset.
      *
      * @return A chart.
      */
     private static JFreeChart createChart(PieDataset dataset) {
 
         JFreeChart chart = ChartFactory.createPieChart(
-            "Smart Phones Manufactured / Q3 2011",  // chart title
-            dataset);
+                "Smart Phones Manufactured / Q3 2011", // chart title
+                dataset);
         chart.removeLegend();
 
         // set a custom background for the chart
-//        chart.setBackgroundPainter(new GradientPainter(new Color(20, 20, 20), 
-//                RectangleAnchor.TOP_LEFT, Color.DARK_GRAY, 
-//                RectangleAnchor.BOTTOM_RIGHT));
+        // chart.setBackgroundPainter(new GradientPainter(new Color(20, 20, 20),
+        // RectangleAnchor.TOP_LEFT, Color.DARK_GRAY,
+        // RectangleAnchor.BOTTOM_RIGHT));
 
         // customise the title position and font
         TextTitle t = chart.getTitle();
@@ -107,9 +100,9 @@ public class SVGPieChartDemo1 {
         t.setFont(new Font("Arial", Font.BOLD, 26));
 
         PiePlot plot = (PiePlot) chart.getPlot();
-//        plot.setBackgroundPainter(null);
+        // plot.setBackgroundPainter(null);
         plot.setInteriorGap(0.04);
-//        plot.setBorderPainter(null);
+        // plot.setBorderPainter(null);
 
         // use gradients and white borders for the section colours
         plot.setSectionPaint("Others", createGradientPaint(new Color(200, 200, 255), Color.BLUE));
@@ -128,7 +121,7 @@ public class SVGPieChartDemo1 {
         plot.setLabelPaint(Color.WHITE);
         plot.setLabelBackgroundPaint(null);
         // add a subtitle giving the data source
-        TextTitle source = new TextTitle("Source: http://www.bbc.co.uk/news/business-15489523", 
+        TextTitle source = new TextTitle("Source: http://www.bbc.co.uk/news/business-15489523",
                 new Font("Courier New", Font.PLAIN, 12));
         source.setPaint(Color.WHITE);
         source.setPosition(RectangleEdge.BOTTOM);
@@ -141,25 +134,25 @@ public class SVGPieChartDemo1 {
     /**
      * A utility method for creating gradient paints.
      * 
-     * @param c1  color 1.
-     * @param c2  color 2.
+     * @param c1 color 1.
+     * @param c2 color 2.
      * 
      * @return A radial gradient paint.
      */
     private static RadialGradientPaint createGradientPaint(Color c1, Color c2) {
         Point2D center = new Point2D.Float(0, 0);
         float radius = 200;
-        float[] dist = {0.0f, 1.0f};
+        float[] dist = { 0.0f, 1.0f };
         return new RadialGradientPaint(center, radius, dist,
-                new Color[] {c1, c2});
+                new Color[] { c1, c2 });
     }
 
     /**
      * Starting point for the demo.
      * 
-     * @param args  ignored.
+     * @param args ignored.
      * 
-     * @throws IOException 
+     * @throws IOException
      */
     public static void main(String[] args) throws IOException {
         JFreeChart chart = createChart(createDataset());

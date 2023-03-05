@@ -43,7 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.api.HorizontalAlignment;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -52,7 +52,6 @@ import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.pdf.PDFDocument;
 import org.jfree.pdf.PDFGraphics2D;
 import org.jfree.pdf.PDFHints;
@@ -62,24 +61,24 @@ import org.jfree.pdf.Page;
  * A demo for PDF output of a time series chart.
  */
 public class PDFTimeSeriesChartDemo1 {
-    
+
     /**
      * Creates a chart.
      *
-     * @param dataset  a dataset.
+     * @param dataset a dataset.
      *
      * @return A chart.
      */
     private static JFreeChart createChart(XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(
-            "International Coffee Organisation : Coffee Prices",
-            null, "US cents/lb", dataset);
+        // JFreeChart chart = ChartFactory.createTimeSeriesChart(
+        // "International Coffee Organisation : Coffee Prices",
+        // null, "US cents/lb", dataset);
 
         String fontName = "Palatino";
         chart.getTitle().setFont(new Font(fontName, Font.BOLD, 18));
         chart.addSubtitle(new TextTitle(
-                "Source: http://www.ico.org/historical/2010-19/PDF/HIST-PRICES.pdf", 
+                "Source: http://www.ico.org/historical/2010-19/PDF/HIST-PRICES.pdf",
                 new Font(fontName, Font.PLAIN, 14)));
 
         XYPlot plot = (XYPlot) chart.getPlot();
@@ -93,7 +92,6 @@ public class PDFTimeSeriesChartDemo1 {
         plot.getRangeAxis().setLabelFont(new Font(fontName, Font.BOLD, 14));
         plot.getRangeAxis().setTickLabelFont(new Font(fontName, Font.PLAIN, 12));
         chart.getLegend().setItemFont(new Font(fontName, Font.PLAIN, 14));
-        chart.getLegend().setFrame(BlockBorder.NONE);
         chart.getLegend().setHorizontalAlignment(HorizontalAlignment.CENTER);
         XYItemRenderer r = plot.getRenderer();
         if (r instanceof XYLineAndShapeRenderer) {
@@ -102,7 +100,7 @@ public class PDFTimeSeriesChartDemo1 {
             renderer.setDrawSeriesLineAsPath(true);
             // set the default stroke for all series
             renderer.setAutoPopulateSeriesStroke(false);
-            renderer.setDefaultStroke(new BasicStroke(3.0f, BasicStroke.CAP_ROUND, 
+            renderer.setDefaultStroke(new BasicStroke(3.0f, BasicStroke.CAP_ROUND,
                     BasicStroke.JOIN_BEVEL), false);
             renderer.setSeriesPaint(0, Color.RED);
             renderer.setSeriesPaint(1, new Color(24, 123, 58));
@@ -202,7 +200,7 @@ public class PDFTimeSeriesChartDemo1 {
         s2.add(new Month(1, 2013), 169.19);
         s2.add(new Month(2, 2013), 161.70);
         s2.add(new Month(3, 2013), 161.53);
-        
+
         TimeSeries s3 = new TimeSeries("Other Milds");
         s3.add(new Month(1, 2010), 158.90);
         s3.add(new Month(2, 2010), 157.86);
@@ -243,7 +241,7 @@ public class PDFTimeSeriesChartDemo1 {
         s3.add(new Month(1, 2013), 157.29);
         s3.add(new Month(2, 2013), 149.46);
         s3.add(new Month(3, 2013), 149.78);
-        
+
         TimeSeries s4 = new TimeSeries("Brazilian Naturals");
         s4.add(new Month(1, 2010), 131.67);
         s4.add(new Month(2, 2010), 124.57);
@@ -284,7 +282,7 @@ public class PDFTimeSeriesChartDemo1 {
         s4.add(new Month(1, 2013), 145.17);
         s4.add(new Month(2, 2013), 136.63);
         s4.add(new Month(3, 2013), 133.61);
-        
+
         TimeSeries s5 = new TimeSeries("Robustas");
         s5.add(new Month(1, 2010), 69.92);
         s5.add(new Month(2, 2010), 67.88);
@@ -325,7 +323,7 @@ public class PDFTimeSeriesChartDemo1 {
         s5.add(new Month(1, 2013), 99.69);
         s5.add(new Month(2, 2013), 104.03);
         s5.add(new Month(3, 2013), 106.26);
-       
+
         TimeSeries s6 = new TimeSeries("Futures (London)");
         s6.add(new Month(1, 2010), 62.66);
         s6.add(new Month(2, 2010), 60.37);
@@ -366,7 +364,7 @@ public class PDFTimeSeriesChartDemo1 {
         s6.add(new Month(1, 2013), 88.85);
         s6.add(new Month(2, 2013), 94.41);
         s6.add(new Month(3, 2013), 97.22);
-        
+
         TimeSeries s7 = new TimeSeries("Futures (New York)");
         s7.add(new Month(1, 2010), 142.76);
         s7.add(new Month(2, 2010), 134.35);
@@ -407,11 +405,11 @@ public class PDFTimeSeriesChartDemo1 {
         s7.add(new Month(1, 2013), 154.28);
         s7.add(new Month(2, 2013), 144.89);
         s7.add(new Month(3, 2013), 141.43);
-       
+
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(s1);
         dataset.addSeries(s2);
-        dataset.addSeries(s3);        
+        dataset.addSeries(s3);
         dataset.addSeries(s4);
         dataset.addSeries(s5);
         dataset.addSeries(s6);
@@ -422,9 +420,9 @@ public class PDFTimeSeriesChartDemo1 {
     /**
      * Starting point for the demo.
      * 
-     * @param args  ignored.
+     * @param args ignored.
      * 
-     * @throws IOException 
+     * @throws IOException
      */
     public static void main(String[] args) throws IOException {
         JFreeChart chart = createChart(createDataset());
@@ -433,7 +431,7 @@ public class PDFTimeSeriesChartDemo1 {
         pdfDoc.setAuthor("jfree.org");
         Page page = pdfDoc.createPage(new Rectangle(612, 468));
         PDFGraphics2D g2 = page.getGraphics2D();
-        g2.setRenderingHint(PDFHints.KEY_DRAW_STRING_TYPE, 
+        g2.setRenderingHint(PDFHints.KEY_DRAW_STRING_TYPE,
                 PDFHints.VALUE_DRAW_STRING_TYPE_VECTOR);
         chart.draw(g2, new Rectangle(0, 0, 612, 468));
         File f = new File("PDFTimeSeriesChartDemo1.pdf");

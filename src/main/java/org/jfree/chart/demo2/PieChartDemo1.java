@@ -43,16 +43,16 @@ import java.awt.geom.Point2D;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.StandardChartTheme;
-import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.api.HorizontalAlignment;
+import org.jfree.chart.api.RectangleEdge;
+import org.jfree.chart.api.RectangleInsets;
+import org.jfree.chart.plot.pie.PiePlot;
+import org.jfree.chart.swing.ApplicationFrame;
+import org.jfree.chart.swing.ChartPanel;
+import org.jfree.chart.swing.UIUtils;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.chart.ui.ApplicationFrame;
-import org.jfree.chart.ui.HorizontalAlignment;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.UIUtils;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
@@ -64,17 +64,10 @@ public class PieChartDemo1 extends ApplicationFrame {
 
     private static final long serialVersionUID = 1L;
 
-    static {
-        // set a theme using the new shadow generator feature available in
-        // 1.0.14 - for backwards compatibility it is not enabled by default
-        ChartFactory.setChartTheme(new StandardChartTheme("JFree/Shadow",
-                true));
-    }
-
     /**
      * Default constructor.
      *
-     * @param title  the frame title.
+     * @param title the frame title.
      */
     public PieChartDemo1(String title) {
         super(title);
@@ -100,22 +93,22 @@ public class PieChartDemo1 extends ApplicationFrame {
     /**
      * Creates a chart.
      *
-     * @param dataset  the dataset.
+     * @param dataset the dataset.
      *
      * @return A chart.
      */
     private static JFreeChart createChart(PieDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createPieChart(
-            "Smart Phones Manufactured / Q3 2011",  // chart title
-            dataset,            // data
-            false,              // no legend
-            true,               // tooltips
-            false               // no URL generation
-        );
+        // JFreeChart chart = ChartFactory.createPieChart(
+        // "Smart Phones Manufactured / Q3 2011", // chart title
+        // dataset, // data
+        // false, // no legend
+        // true, // tooltips
+        // false // no URL generation
+        // );
 
         // set a custom background for the chart
-        chart.setBackgroundPaint(new GradientPaint(new Point(0, 0), 
+        chart.setBackgroundPaint(new GradientPaint(new Point(0, 0),
                 new Color(20, 20, 20), new Point(400, 200), Color.DARK_GRAY));
 
         // customise the title position and font
@@ -130,13 +123,13 @@ public class PieChartDemo1 extends ApplicationFrame {
         plot.setOutlineVisible(false);
 
         // use gradients and white borders for the section colours
-        plot.setSectionPaint("Others", 
+        plot.setSectionPaint("Others",
                 createGradientPaint(new Color(200, 200, 255), Color.BLUE));
-        plot.setSectionPaint("Samsung", 
+        plot.setSectionPaint("Samsung",
                 createGradientPaint(new Color(255, 200, 200), Color.RED));
-        plot.setSectionPaint("Apple", 
+        plot.setSectionPaint("Apple",
                 createGradientPaint(new Color(200, 255, 200), Color.GREEN));
-        plot.setSectionPaint("Nokia", 
+        plot.setSectionPaint("Nokia",
                 createGradientPaint(new Color(200, 255, 200), Color.YELLOW));
         plot.setDefaultSectionOutlinePaint(Color.WHITE);
         plot.setSectionOutlinesVisible(true);
@@ -149,9 +142,9 @@ public class PieChartDemo1 extends ApplicationFrame {
         plot.setLabelOutlineStroke(null);
         plot.setLabelPaint(Color.WHITE);
         plot.setLabelBackgroundPaint(null);
-        
+
         // add a subtitle giving the data source
-        TextTitle source = new TextTitle("Source: http://www.bbc.co.uk/news/business-15489523", 
+        TextTitle source = new TextTitle("Source: http://www.bbc.co.uk/news/business-15489523",
                 new Font("Courier New", Font.PLAIN, 12));
         source.setPaint(Color.WHITE);
         source.setPosition(RectangleEdge.BOTTOM);
@@ -164,17 +157,17 @@ public class PieChartDemo1 extends ApplicationFrame {
     /**
      * A utility method for creating gradient paints.
      * 
-     * @param c1  color 1.
-     * @param c2  color 2.
+     * @param c1 color 1.
+     * @param c2 color 2.
      * 
      * @return A radial gradient paint.
      */
     private static RadialGradientPaint createGradientPaint(Color c1, Color c2) {
         Point2D center = new Point2D.Float(0, 0);
         float radius = 200;
-        float[] dist = {0.0f, 1.0f};
+        float[] dist = { 0.0f, 1.0f };
         return new RadialGradientPaint(center, radius, dist,
-                new Color[] {c1, c2});
+                new Color[] { c1, c2 });
     }
 
     /**
@@ -194,7 +187,7 @@ public class PieChartDemo1 extends ApplicationFrame {
     /**
      * Starting point for the demonstration application.
      *
-     * @param args  ignored.
+     * @param args ignored.
      */
     public static void main(String[] args) {
         PieChartDemo1 demo = new PieChartDemo1("JFreeChart: Pie Chart Demo 1");
@@ -204,4 +197,3 @@ public class PieChartDemo1 extends ApplicationFrame {
     }
 
 }
-
