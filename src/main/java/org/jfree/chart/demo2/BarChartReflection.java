@@ -56,7 +56,7 @@ import java.util.ArrayList;
 /**
  * A simple demonstration application showing how to create a bar chart.
  */
-public class BarChartDemo1 extends ApplicationFrame {
+public class BarChartReflection extends ApplicationFrame {
 
     private final long serialVersionUID = 1L;
     private IReflectionFactory factory;
@@ -76,7 +76,7 @@ public class BarChartDemo1 extends ApplicationFrame {
      * @throws SecurityException
      * @throws NoSuchMethodException
      */
-    public BarChartDemo1(String title) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+    public BarChartReflection(String title) throws NoSuchMethodException, SecurityException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException,
             MissingParamsException, InvalidChartNameException {
         super(title);
@@ -160,7 +160,7 @@ public class BarChartDemo1 extends ApplicationFrame {
     public static void main(String[] args) throws NoSuchMethodException, SecurityException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, ClassNotFoundException, InstantiationException,
             MissingParamsException, InvalidChartNameException {
-        BarChartDemo1 demo = new BarChartDemo1("JFreeChart: BarChartDemo1.java");
+        BarChartReflection demo = new BarChartReflection("JFreeChart: BarChartDemo1.java");
         demo.pack();
         UIUtils.centerFrameOnScreen(demo);
         demo.setVisible(true);

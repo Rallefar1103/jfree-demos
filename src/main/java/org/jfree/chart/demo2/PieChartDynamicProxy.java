@@ -70,7 +70,7 @@ import org.jfree.data.general.PieDataset;
  * A simple demonstration application showing how to create a pie chart using
  * data from a {@link DefaultPieDataset}.
  */
-public class PieChartDemo1 extends ApplicationFrame {
+public class PieChartDynamicProxy extends ApplicationFrame {
 
         private final long serialVersionUID = 1L;
         private ChartFactoryReflection factory;
@@ -92,7 +92,8 @@ public class PieChartDemo1 extends ApplicationFrame {
          * @throws SecurityException
          * @throws NoSuchMethodException
          */
-        public PieChartDemo1(String title) throws NoSuchMethodException, SecurityException, IllegalAccessException,
+        public PieChartDynamicProxy(String title)
+                        throws NoSuchMethodException, SecurityException, IllegalAccessException,
                         IllegalArgumentException, InvocationTargetException, ClassNotFoundException,
                         InstantiationException,
                         MissingParamsException, InvalidChartNameException {
@@ -257,7 +258,7 @@ public class PieChartDemo1 extends ApplicationFrame {
                         IllegalArgumentException, InvocationTargetException, ClassNotFoundException,
                         InstantiationException,
                         MissingParamsException, InvalidChartNameException {
-                PieChartDemo1 demo = new PieChartDemo1("JFreeChart: Pie Chart Demo 1");
+                PieChartDynamicProxy demo = new PieChartDynamicProxy("JFreeChart: Pie Chart Demo 1");
                 demo.pack();
                 UIUtils.centerFrameOnScreen(demo);
                 demo.setVisible(true);
