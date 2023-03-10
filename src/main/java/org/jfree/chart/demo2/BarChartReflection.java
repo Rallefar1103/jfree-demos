@@ -39,6 +39,7 @@ import org.jfree.chart.IReflectionFactory;
 import org.jfree.chart.InvalidChartNameException;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.MissingParamsException;
+import org.jfree.chart.ReflectionStrategy;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
@@ -124,16 +125,26 @@ public class BarChartReflection extends ApplicationFrame {
             InvocationTargetException, MissingParamsException, InvalidChartNameException, ClassNotFoundException,
             InstantiationException {
 
-        this.params.add("Performance: JFreeSVG vs Batik");
+        this.params.add("EmptyTitle");
         this.params.add("Milliseconds");
         this.params.add("Milliseconds");
         this.params.add(dataset);
         this.factory = new ChartFactoryReflection();
         String classPath = ChartLookupTable.chartLookupTable.get("BarChart");
         JFreeChart chart = factory.getChartReflection(classPath, this.params);
+
+        ArrayList<Object> titleParams = new ArrayList<Object>();
+        titleParams.add("ReflectionAddedTitle");
+
+        ReflectionStrategy strategy = new ReflectionStrategy(chart);
+        strategy.setTitle("public void setTitleOnChart(String title)", titleParams);
+
         chart.addSubtitle(new TextTitle("Time to generate 1000 charts in SVG "
                 + "format (lower bars = better performance)"));
-        chart.setBackgroundPaint(Color.WHITE);
+
+        ArrayList<Object> paintParams = new ArrayList<Object>();
+        paintParams.add(Color.WHITE);
+        strategy.setBackgroundPaint("public void setBackgroundPaintOnChart(Paint paint)", paintParams);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
 
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
