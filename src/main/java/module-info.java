@@ -9,5 +9,5 @@ module org.jfree.demos {
 
     // exports com.orsoncharts.demo;
     exports org.jfree.pdf.demo;
-    exports org.jfree.chart.demo2;
+    exports org.jfree.chart.Reflection;
 }

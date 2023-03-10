@@ -30,7 +30,7 @@
  *
  */
 
-package org.jfree.chart.demo2;
+package org.jfree.chart.Lambda;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartLookupTable;
@@ -59,7 +59,7 @@ import java.text.SimpleDateFormat;
  * part, default settings are used, except that the renderer is modified to
  * show filled shapes (as well as lines) at each data point.
  */
-public class TimeSeriesLambda extends ApplicationFrame {
+public class CreateTimeSeriesChartLambda extends ApplicationFrame {
 
     private final long serialVersionUID = 1L;
     private LambdaChartCreator lambdaCreator;
@@ -70,7 +70,7 @@ public class TimeSeriesLambda extends ApplicationFrame {
      *
      * @param title the frame title.
      */
-    public TimeSeriesLambda(String title) {
+    public CreateTimeSeriesChartLambda(String title) {
         super(title);
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
         chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
@@ -192,7 +192,7 @@ public class TimeSeriesLambda extends ApplicationFrame {
      */
     public static void main(String[] args) {
 
-        TimeSeriesLambda demo = new TimeSeriesLambda(
+        CreateTimeSeriesChartLambda demo = new CreateTimeSeriesChartLambda(
                 "Time Series Chart Demo 1");
         demo.pack();
         UIUtils.centerFrameOnScreen(demo);

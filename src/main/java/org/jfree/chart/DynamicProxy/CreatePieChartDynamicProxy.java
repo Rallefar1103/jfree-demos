@@ -30,7 +30,7 @@
  *
  */
 
-package org.jfree.chart.demo2;
+package org.jfree.chart.DynamicProxy;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -49,7 +49,9 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFactoryReflection;
 import org.jfree.chart.ChartInvocationHandler;
 import org.jfree.chart.ChartLookupTable;
+import org.jfree.chart.DynProxInvocHandler;
 import org.jfree.chart.DynamicProxyChartCreator;
+import org.jfree.chart.DynamicProxyStrategy;
 import org.jfree.chart.IReflectionFactory;
 import org.jfree.chart.InvalidChartNameException;
 import org.jfree.chart.JFreeChart;
@@ -70,7 +72,7 @@ import org.jfree.data.general.PieDataset;
  * A simple demonstration application showing how to create a pie chart using
  * data from a {@link DefaultPieDataset}.
  */
-public class PieChartDynamicProxy extends ApplicationFrame {
+public class CreatePieChartDynamicProxy extends ApplicationFrame {
 
         private final long serialVersionUID = 1L;
         private ChartFactoryReflection factory;
@@ -92,7 +94,7 @@ public class PieChartDynamicProxy extends ApplicationFrame {
          * @throws SecurityException
          * @throws NoSuchMethodException
          */
-        public PieChartDynamicProxy(String title)
+        public CreatePieChartDynamicProxy(String title)
                         throws NoSuchMethodException, SecurityException, IllegalAccessException,
                         IllegalArgumentException, InvocationTargetException, ClassNotFoundException,
                         InstantiationException,
@@ -152,8 +154,17 @@ public class PieChartDynamicProxy extends ApplicationFrame {
                 JFreeChart chart = this.proxyCreator.getChartObject(classPath, this.params);
 
                 // set a custom background for the chart
-                chart.setBackgroundPaint(new GradientPaint(new Point(0, 0),
+                DynProxInvocHandler handler = new DynProxInvocHandler(chart);
+                DynamicProxyStrategy strategy = new DynamicProxyStrategy(handler);
+
+                strategy.setBackgroundPaint(new GradientPaint(new Point(0, 0),
                                 new Color(20, 20, 20), new Point(400, 200), Color.DARK_GRAY));
+
+                strategy.setTitle(new TextTitle("DynamicProxyTitle"));
+
+                // set a custom background for the chart
+                // chart.setBackgroundPaint(new GradientPaint(new Point(0, 0),
+                // new Color(20, 20, 20), new Point(400, 200), Color.DARK_GRAY));
 
                 // customise the title position and font
                 TextTitle t = chart.getTitle();
@@ -258,7 +269,7 @@ public class PieChartDynamicProxy extends ApplicationFrame {
                         IllegalArgumentException, InvocationTargetException, ClassNotFoundException,
                         InstantiationException,
                         MissingParamsException, InvalidChartNameException {
-                PieChartDynamicProxy demo = new PieChartDynamicProxy("JFreeChart: Pie Chart Demo 1");
+                CreatePieChartDynamicProxy demo = new CreatePieChartDynamicProxy("JFreeChart: Pie Chart Demo 1");
                 demo.pack();
                 UIUtils.centerFrameOnScreen(demo);
                 demo.setVisible(true);
