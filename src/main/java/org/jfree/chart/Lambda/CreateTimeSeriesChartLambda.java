@@ -34,8 +34,11 @@ package org.jfree.chart.Lambda;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartLookupTable;
+import org.jfree.chart.ISetBackground;
+import org.jfree.chart.ISetTitle;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LambdaChartCreator;
+import org.jfree.chart.LambdaStrategy;
 import org.jfree.chart.NewChart;
 import org.jfree.chart.api.RectangleInsets;
 import org.jfree.chart.axis.DateAxis;
@@ -52,6 +55,7 @@ import org.jfree.data.xy.XYDataset;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -69,8 +73,17 @@ public class CreateTimeSeriesChartLambda extends ApplicationFrame {
      * chart. This example uses monthly data.
      *
      * @param title the frame title.
+     * @throws InstantiationException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
+     * @throws ClassNotFoundException
      */
-    public CreateTimeSeriesChartLambda(String title) {
+    public CreateTimeSeriesChartLambda(String title)
+            throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, InstantiationException {
         super(title);
         ChartPanel chartPanel = (ChartPanel) createDemoPanel();
         chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
@@ -83,8 +96,17 @@ public class CreateTimeSeriesChartLambda extends ApplicationFrame {
      * @param dataset a dataset.
      *
      * @return A chart.
+     * @throws InstantiationException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
+     * @throws ClassNotFoundException
      */
-    private JFreeChart createChart(XYDataset dataset) {
+    private JFreeChart createChart(XYDataset dataset)
+            throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, InstantiationException {
 
         this.lambdaCreator = new LambdaChartCreator();
         NewChart<String, XYDataset, JFreeChart> function = (type, title, category, value,
@@ -92,7 +114,6 @@ public class CreateTimeSeriesChartLambda extends ApplicationFrame {
 
         JFreeChart chart = this.lambdaCreator.createChart(function, "TimeSeriesChart",
                 "Legal & General Unit Trust Prices", "Date", "Price Per Unit", dataset);
-        chart.setBackgroundPaint(Color.WHITE);
 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(Color.LIGHT_GRAY);
@@ -109,6 +130,15 @@ public class CreateTimeSeriesChartLambda extends ApplicationFrame {
             renderer.setDefaultShapesFilled(true);
             renderer.setDrawSeriesLineAsPath(true);
         }
+
+        LambdaStrategy strategy = new LambdaStrategy<>();
+        ISetTitle<String> titleFunc = (title) -> chart.setTitle(title);
+
+        strategy.setTitle(titleFunc, "LambdaTitle");
+
+        ISetBackground<Paint> backgroundFunc = (color) -> chart.setBackgroundPaint(color);
+
+        strategy.setBackgroundPaint(backgroundFunc, Color.WHITE);
 
         DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setDateFormatOverride(new SimpleDateFormat("MMM-yyyy"));
@@ -176,8 +206,16 @@ public class CreateTimeSeriesChartLambda extends ApplicationFrame {
      * Creates a panel for the demo (used by SuperDemo.java).
      *
      * @return A panel.
+     * @throws InstantiationException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
+     * @throws ClassNotFoundException
      */
-    public JPanel createDemoPanel() {
+    public JPanel createDemoPanel() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
         JFreeChart chart = createChart(createDataset());
         ChartPanel panel = new ChartPanel(chart, false);
         panel.setFillZoomRectangle(true);
@@ -189,8 +227,16 @@ public class CreateTimeSeriesChartLambda extends ApplicationFrame {
      * Starting point for the demonstration application.
      *
      * @param args ignored.
+     * @throws InstantiationException
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws SecurityException
+     * @throws NoSuchMethodException
+     * @throws ClassNotFoundException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 
         CreateTimeSeriesChartLambda demo = new CreateTimeSeriesChartLambda(
                 "Time Series Chart Demo 1");

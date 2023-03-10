@@ -134,8 +134,15 @@ public class CreateBarChartReflection extends ApplicationFrame {
         String classPath = ChartLookupTable.chartLookupTable.get("BarChart");
         JFreeChart chart = factory.getChartReflection(classPath, this.params);
 
-        chart.addSubtitle(new TextTitle("Time to generate 1000 charts in SVG "
-                + "format (lower bars = better performance)"));
+        ArrayList<Object> titleParams = new ArrayList<Object>();
+        titleParams.add("ReflectionAddedTitle");
+
+        ReflectionStrategy strategy = new ReflectionStrategy(chart);
+        strategy.setTitle("public void setTitleOnChart(String title)", titleParams);
+
+        ArrayList<Object> paintParams = new ArrayList<Object>();
+        paintParams.add(Color.WHITE);
+        strategy.setBackgroundPaint("public void setBackgroundPaintOnChart(Paint paint)", paintParams);
 
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
 
