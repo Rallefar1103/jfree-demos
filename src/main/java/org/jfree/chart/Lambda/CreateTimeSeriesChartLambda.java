@@ -108,10 +108,16 @@ public class CreateTimeSeriesChartLambda extends ApplicationFrame {
             throws ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, InstantiationException {
 
+        // Init the lamda chart creator class
         this.lambdaCreator = new LambdaChartCreator();
+
+        // create the functional interface to dynamically invoke the static get chart
+        // regular method
         NewChart<String, XYDataset, JFreeChart> function = (type, title, category, value,
                 chartData) -> ChartFactory.getChartRegular(type, title, category, value, chartData);
 
+        // dynamically create the TimeSeriesChart using the functional interface and the
+        // lambdaCreator createChart method
         JFreeChart chart = this.lambdaCreator.createChart(function, "TimeSeriesChart",
                 "Legal & General Unit Trust Prices", "Date", "Price Per Unit", dataset);
 
@@ -131,13 +137,19 @@ public class CreateTimeSeriesChartLambda extends ApplicationFrame {
             renderer.setDrawSeriesLineAsPath(true);
         }
 
+        // Init the lambda strategy class
         LambdaStrategy strategy = new LambdaStrategy<>();
+
+        // init the functional interface to setting the title
         ISetTitle<String> titleFunc = (title) -> chart.setTitle(title);
 
+        // invoke the setTitle method using the functional interface on runtime
         strategy.setTitle(titleFunc, "LambdaTitle");
 
+        // init the functional interface to setting the background
         ISetBackground<Paint> backgroundFunc = (color) -> chart.setBackgroundPaint(color);
 
+        // invoke the setBackgroundPaint method using the function interface
         strategy.setBackgroundPaint(backgroundFunc, Color.WHITE);
 
         DateAxis axis = (DateAxis) plot.getDomainAxis();

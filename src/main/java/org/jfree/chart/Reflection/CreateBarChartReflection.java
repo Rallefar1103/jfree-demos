@@ -126,22 +126,37 @@ public class CreateBarChartReflection extends ApplicationFrame {
             InvocationTargetException, MissingParamsException, InvalidChartNameException, ClassNotFoundException,
             InstantiationException {
 
+        // Prepare params for reflection
         this.params.add("Some Title");
         this.params.add("Milliseconds");
         this.params.add("Milliseconds");
         this.params.add(dataset);
+
+        // init the reflection powered factory class
         this.factory = new ChartFactoryReflection();
+
+        // get internal class path for "BarChart"
         String classPath = ChartLookupTable.chartLookupTable.get("BarChart");
+
+        // dynamically instantiate the BarChart using Reflection Factory Class
         JFreeChart chart = factory.getChartReflection(classPath, this.params);
 
+        // Prepare params for dynamically invoking the setTitle method on the chart
         ArrayList<Object> titleParams = new ArrayList<Object>();
         titleParams.add("ReflectionAddedTitle");
 
+        // Load the ReflectionStrategy class
         ReflectionStrategy strategy = new ReflectionStrategy(chart);
+
+        // Dynamically invoke the setTitle method using method signature as string input
         strategy.setTitle("public void setTitleOnChart(String title)", titleParams);
 
+        // Prepare paint params for dynamically invoking the setBackgroundPaint method
         ArrayList<Object> paintParams = new ArrayList<Object>();
         paintParams.add(Color.WHITE);
+
+        // Dynamically invoke the setBackground method using method signature as string
+        // input
         strategy.setBackgroundPaint("public void setBackgroundPaintOnChart(Paint paint)", paintParams);
 
         CategoryPlot plot = (CategoryPlot) chart.getPlot();

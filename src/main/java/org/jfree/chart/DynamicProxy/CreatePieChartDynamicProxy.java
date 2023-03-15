@@ -140,31 +140,35 @@ public class CreatePieChartDynamicProxy extends ApplicationFrame {
                         ClassNotFoundException,
                         InstantiationException, MissingParamsException, InvalidChartNameException {
 
+                // set up params for dynamically instantiating a chart using dynamic proxy
                 this.params.add("Smart Phones Manufactured / Q3 2011");
                 this.params.add(dataset);
                 this.params.add(false);
                 this.params.add(true);
                 this.params.add(false);
 
+                // Instantiate the various components for the DynamicProxyChartCreator
                 this.factory = new ChartFactoryReflection();
                 this.invocHandler = new ChartInvocationHandler(this.factory);
                 this.proxyCreator = new DynamicProxyChartCreator(this.invocHandler);
 
+                // get the internal path to the PieChart class
                 String classPath = ChartLookupTable.chartLookupTable.get("PieChart");
+
+                // invoke the proxy creator to dynamically create the JFreeChart object
                 JFreeChart chart = this.proxyCreator.getChartObject(classPath, this.params);
 
-                // set a custom background for the chart
+                // Initialize the dynamic proxy strategy handler and the dynamic proxy strategy
+                // class
                 DynProxInvocHandler handler = new DynProxInvocHandler(chart);
                 DynamicProxyStrategy strategy = new DynamicProxyStrategy(handler);
 
+                // invoke the setBackgroundPaint method dynamically using the DP strategy class
                 strategy.setBackgroundPaint(new GradientPaint(new Point(0, 0),
                                 new Color(20, 20, 20), new Point(400, 200), Color.DARK_GRAY));
 
+                // invoke the setTitle method dynamically using the DP strategy class
                 strategy.setTitle(new TextTitle("DynamicProxyTitle"));
-
-                // set a custom background for the chart
-                // chart.setBackgroundPaint(new GradientPaint(new Point(0, 0),
-                // new Color(20, 20, 20), new Point(400, 200), Color.DARK_GRAY));
 
                 // customise the title position and font
                 TextTitle t = chart.getTitle();
